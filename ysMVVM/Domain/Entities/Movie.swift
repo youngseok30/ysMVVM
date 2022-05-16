@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 typealias MovieId = Int
 
@@ -34,6 +35,7 @@ struct Movie: Codable {
     let posterPath: String?
     let overview: String
     let releaseDate: Date?
+    var image: UIImage?
     
     private enum CodingKeys: String, CodingKey {        
         case id
@@ -75,4 +77,11 @@ fileprivate extension DateFormatter {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+}
+
+extension MoviesPage {
+    func toDomain() -> [Photo] {
+        
+        return movies.filter { $0.posterPath != nil }.map { Photo(image: UIImage(systemName: "square")!, imageUrl: URL(string: $0.posterPath ?? "/1cYOPFbHEEXcXq8VYlJI5h2QpIe.jpg" )!) }
+    }
 }

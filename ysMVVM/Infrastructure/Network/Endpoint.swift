@@ -10,17 +10,25 @@ import Moya
 
 enum Endpoint {
     case fetchMovieList(String, Int)
+    case download(url: String)
 }
 
 extension Endpoint: TargetType {
     var baseURL: URL {
-        return URL(string: "http://api.themoviedb.org")!
+        switch self {
+        case .download(_):
+            return URL(string: "https://image.tmdb.org/t/p/w500")!
+        default:
+            return URL(string: "http://api.themoviedb.org")!
+        }
     }
     
     var path: String {
         switch self {
         case .fetchMovieList:
             return "/3/search/movie"
+        case .download(let url):
+            return url
         }
     }
     
@@ -30,6 +38,8 @@ extension Endpoint: TargetType {
         switch self {
         case .fetchMovieList(let query, let page):
             return parameter.append(["query" : query, "page" : page])
+        default:
+            return [:]
         }
     }
     
@@ -45,7 +55,7 @@ extension Endpoint: TargetType {
     }
     
     var headers: [String : String]? {
-        return [:]
+        return nil
     }
     
 }

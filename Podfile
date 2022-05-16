@@ -9,7 +9,8 @@ target 'ysMVVM' do
   pod 'RxCocoa'
   pod 'Swinject'
   pod 'SwinjectAutoregistration'
-  pod 'Moya'
+  pod 'Moya/RxSwift', '~> 15.0'
+  pod 'RxCocoa'
 
   target 'ysMVVMTests' do
     inherit! :search_paths
